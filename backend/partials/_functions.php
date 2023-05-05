@@ -44,7 +44,7 @@ function doLogin()
 		$row = dbFetchAssoc($result);
 		$_SESSION['username'] = $username;
 		$_SESSION['calendar_fd_user_name'] = $row['username'];
-		header('Location: dashboard/index.php');
+		header('Location: dashboard.php');
 		exit();
 	}
 	else {
