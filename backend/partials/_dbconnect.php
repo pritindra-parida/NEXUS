@@ -1,11 +1,11 @@
 <?php  
 	$dbusername = "root";
-	$password="";
+	$dbpassword="";
 	$dbname = "user_db";
-	$server = "localhost";
+	$dbserver = "localhost";
 
 	try{
-		$conn = new mysqli($server, $dbusername, $password, $dbname);
+		$conn = new mysqli($dbserver, $dbusername, $dbpassword, $dbname);
 	}
 	catch(Exception $e){
 		echo e;

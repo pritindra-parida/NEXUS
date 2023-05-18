@@ -1,6 +1,6 @@
 <?php
-include('partials/_dbconnect.php');
-$dbConn = mysqli_connect ($server, $dbusername, $password, $dbname);
+include('_dbconnect.php');
+$dbConn = mysqli_connect ($dbserver, $dbusername, $dbpassword, $dbname);
 
 function random_string($length = 8) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -44,7 +44,7 @@ function doLogin()
 		$row = dbFetchAssoc($result);
 		$_SESSION['username'] = $username;
 		$_SESSION['calendar_fd_user_name'] = $row['username'];
-		header('Location: dashboard.php');
+		header('Location: dashboard/index.php');
 		exit();
 	}
 	else {
@@ -132,8 +132,6 @@ function getUserRecords(){
 /*  ===============
     Database Functions
     ===============*/
-
- 
 function dbQuery($sql)
 {
 	global $dbConn;
@@ -181,5 +179,89 @@ function dbInsertId()
 {
 	return mysqli_insert_id();
 }
+
+
+
+// Functions for Users
+
+function getEventList($username){
+
+}
+
+function getEventAttendeeList($username, $eventid){
+
+}
+
+
+
+
+
+
+// Dashboard Functions
+
+function fetchUserId($username){
+	global $dbusername;
+	global $dbserver;
+	global $dbpassword;
+	global $dbname;
+	$conn = new mysqli($dbserver, $dbusername, $dbpassword, $dbname);
+	$query = "select id from sign_up where username = '" .  $username . "'";
+	$result = mysqli_query($conn, $query);
+	$row = mysqli_fetch_assoc($result);
+	return $row['id'];
+}
+
+
+
+
+// Event Creation Functions
+function addToEventList($conn_user_db, $event_name, $event_start_date, $event_venue, $event_participants_number){
+
+	$query = "INSERT INTO `event_list` (`event_name`, `event_date`, `event_venue`, `participants_number`) VALUES ('$event_name', '$event_start_date', '$event_venue', '$event_participants_number');";
+	if(!mysqli_query($conn_user_db, $query)){
+		die("error in inserting" . mysqli_error());
+	}	
+}
+
+
+
+function createEventTables($conn_user_db, $event_name, $event_description, $event_venue, $event_participants_number, $event_start_date, $event_end_date, $event_start_time, $event_end_time, $speaker_number, $organizer_number, $contact_email, $contact_phone){
+
+	$fetchEventId = "SELECT MAX(event_id) FROM `event_list`";
+	$row = mysqli_fetch_assoc(mysqli_query($conn_user_db, $fetchEventId));
+	$event_id = $row['MAX(event_id)'];
+	$event_table_name = $event_id . "_details";
+	$attendes_table_name = $event_id . "_attendees";
+
+	$query = "CREATE TABLE " . $event_table_name . " (`event_id` INT(3) NOT NULL, `event_name` VARCHAR(250) NOT NULL , `event_description` VARCHAR(250) NOT NULL , `event_venue` VARCHAR(250) NOT NULL , `participants_number` INT(250) NOT NULL , `event_start_date` DATE NOT NULL , `event_end_date` DATE NOT NULL , `event_start_time` TIME NOT NULL , `event_end_time` TIME NOT NULL , `speaker_count` INT(10) NOT NULL , `organizer_count` INT(10) NOT NULL , `contact_email` VARCHAR(250) NOT NULL , `contact_phone` INT(20) NOT NULL, PRIMARY KEY (`event_id`)) ENGINE = InnoDB;";
+	if(!mysqli_query($conn_user_db, $query)){
+		die("error in creating table" . mysqli_error());
+	}
+	$query2 = "CREATE TABLE " . $attendes_table_name . " (`attendee_id` INT(10) NOT NULL AUTO_INCREMENT , `attendee_name` VARCHAR(250) NOT NULL , `attendee_email` VARCHAR(250) NOT NULL , `attendee_designation` VARCHAR(150) NOT NULL , `attendee_organization` VARCHAR(250) NOT NULL , PRIMARY KEY (`attendee_id`), UNIQUE (`attendee_email`)) ENGINE = InnoDB;";
+	if(!mysqli_query($conn_user_db, $query2)){
+		die("error in creating table" . mysqli_error());
+	}
+
+}
+
+function addSpeakers($conn_user_db, $column_name, $speaker_name){
+	$fetchEventId = "SELECT MAX(event_id) FROM `event_list`";
+	$row = mysqli_fetch_assoc(mysqli_query($conn_user_db, $fetchEventId));
+	$event_id = $row['MAX(event_id)'];
+	$event_table_name = $event_id . "_details";
+	$attendes_table_name = $event_id . "_attendees";
+
+	$query = "ALTER TABLE " . $event_table_name . " ADD " . $column_name . " VARCHAR(250) NOT NULL;";
+
+	if(!mysqli_query($conn_user_db, $query)){
+		die("error in adding column" . mysqli_error());
+	}
+	
+}
+
+function addOrganizers(){
+
+}
+
 
 ?>
