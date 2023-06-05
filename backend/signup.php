@@ -96,34 +96,34 @@
               <!-- Full Name Input -->
               <div class="form-outline mb-4">
                 <input type="text" id="fullname" class="form-control" name="fullname" 
-                  placeholder="Enter Your Full Name" />
+                  placeholder="Enter Your Full Name" required />
               </div>
 
               <!-- Username Input -->
               <div class="form-outline mb-4">
                 <input type="text" id="username" class="form-control" name="username" 
-                  placeholder="Enter a Username" />
+                  placeholder="Enter a Username" required />
               </div>
 
               <!-- Email input -->
               <div style="font-size: .85rem;"><span id='message1'></span></div>
               <div class="form-outline mb-4">
                 <input type="email" id="email" class="form-control" name="email" 
-                  placeholder="Enter Your Email Address" onfocusout='checkEmail();' />
+                  placeholder="Enter Your Email Address" onfocusout='checkEmail();' required />
               </div>
 
 
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <input type="password" id="password" class="form-control" name="password"
-                  placeholder="Enter password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" />
+                  placeholder="Enter password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" required />
               </div>
 
               <!-- Confirmation Password input -->
               <div style="font-size: .85rem;"><span id='message'></span></div>
               <div class="form-outline mb-4">
                 <input type="password" id="confirm_password" class="form-control" name="confirmpassword" 
-                  placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" onfocusout='checkPassword();'/>
+                  placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" onfocusout='checkPassword();' required/>
               </div>
 
 
@@ -156,7 +156,7 @@
 
           <div class="col-lg-6 col-md-6 footer-info">
             <img src="../img/full-logo.png" alt="TheEvenet">
-            <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.</p>
+            <p>NEXUS is the ultimate tech event platform, seamlessly connecting enthusiasts and industry professionals. Discover, attend, and engage in cutting-edge events, fostering knowledge sharing and networking opportunities for all.</p>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
@@ -173,11 +173,12 @@
           <div class="col-lg-3 col-md-6 footer-contact">
             <h4>Contact Us</h4>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              NEXUS Tower <br>
+              Chandrasekharpur, Bhubaneswar <br>
+              Odisha-751024<br>
+              India<br>
+              <strong>Phone:</strong> 1800 1899 1899<br>
+              <strong>Email:</strong> support@nexus.org.in<br>
             </p>
 
             <div class="social-links">

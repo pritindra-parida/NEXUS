@@ -12,10 +12,6 @@
   $result = mysqli_query($conn, $sql);
 ?>
 
-<!-- Event Table Creation Query
-CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NULL AUTO_INCREMENT , `event_name` VARCHAR(250) NOT NULL , `event_description` VARCHAR(250) NOT NULL , `event_venue` VARCHAR(250) NOT NULL , `participants_number` INT(250) NOT NULL , `event_start_date` DATE NOT NULL , `event_end_date` DATE NOT NULL , `event_start_time` TIME NOT NULL , `event_end_time` TIME NOT NULL , `speaker_count` INT(10) NOT NULL , `organizer_count` INT(10) NOT NULL , `contact_email` VARCHAR(250) NOT NULL , PRIMARY KEY (`event_id`)) ENGINE = InnoDB;
- -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +85,7 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
                         </a>
                     </li>
 
-                    <li class="nav-link" id="calender_btn">
+                    <li class="nav-link" id="settings_btn">
                         <a href="#">
                             <i class='bx bx-cog icon' ></i>
                             <span class="text nav-text">Settings</span>
@@ -101,12 +97,13 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
 
             <div class="bottom-content">
 
-                <li class="">
-                    <a href="#">
-                        <i class='bx bx-log-out icon' ></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
+                <li class="" id="logout_btn">
+                  <a href="#" onclick="logout()">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">Logout</span>
+                  </a>
                 </li>
+
 
                 <li class="mode">
                     <div class="sun-moon">
@@ -192,10 +189,24 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
                 <div class="card">
                   <div class="card-body p-0">
                     <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-                        <h1 style="text-align: center;">Event Attendees</h1>
-                      <table class="table table-striped mb-0">
+
+                        <form action="" method="POST">
+                            <div class="form-group" style="padding: 10px">
+                                <label for="id-search">Event Id: </label>
+                                <input type="number" name="id-search" id="id-search" placeholder="Enter Event Id">
+                                <button name="search-btn" class="btn btn-primary" id="search-btn">Search</button>
+                            </div>
+                        </form>
+
+                      <?php
+                                if(isset($_POST['search-btn'])){
+                                    $event_id = $_POST['id-search'];
+                                    $attendees_table_name = $event_id . "_attendees";
+                        ?>      
+                        <table class="table table-striped mb-0">
                         <thead style="background-color: #002d72;">
                           <tr>
+                            <th scope="col">Event Id</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Degignation</th>
@@ -203,19 +214,23 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
                             <?php
-                                $sql = "SELECT * FROM " . $tablename; //this will not work mate
+                                try{
+                                $sql = "SELECT * FROM " . $attendees_table_name;
                                 $result = mysqli_query($conn, $sql);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                                <td><?php echo $row['name'] ?></td>
-                                <td><?php echo $row['email'] ?></td>
-                                <td><?php echo $row['degignation'] ?></td>
-                                <td><?php echo $row['organization'] ?></td>
+                            ?>  <tr>
+                                <td><?php echo $event_id ?></td>
+                                <td><?php echo $row['attendee_name'] ?></td>
+                                <td><?php echo $row['attendee_email'] ?></td>
+                                <td><?php echo $row['attendee_designation'] ?></td>
+                                <td><?php echo $row['attendee_organization'] ?></td>
                             </tr>   
                             <?php
+                                }}
+                                catch(Exception $e){
                                 }
+      }
                             ?>
                         </tbody>
                       </table>
@@ -237,10 +252,10 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
 
 
     <!--============
-    Calender Section
+    Settings Section
     ============ -->
-    <section class="intro home calender invisible" id="calender">
-        <div class="text">This is the Calender Section</div>
+    <section class="intro home settings invisible" id="settings">
+        <div class="text">This is the Settings Section</div>
     </section>
 
     <!--============
@@ -259,40 +274,40 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
           <form action="create_event.php" method="POST" id="form-1">
             <div class="form-group">
               <label for="event-name">Name of Event</label>
-              <input type="text" class="form-control" id="event-name" name="event-name" placeholder="Enter event name">
+              <input type="text" class="form-control" id="event-name" name="event-name" placeholder="Enter event name" required>
             </div>
             <div class="form-group">
               <label for="event-description">Event Description</label>
-              <textarea class="form-control" id="event-description" name="event-description" rows="3"></textarea>
+              <textarea class="form-control" id="event-description" name="event-description" rows="3" required></textarea>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
                 <label for="event-venue">Venue</label>
-                <input type="text" class="form-control" id="event-venue" name="event-venue" placeholder="Enter event venue">
+                <input type="text" class="form-control" id="event-venue" name="event-venue" placeholder="Enter event venue" required>
               </div>
               <div class="col-md-6">
                 <label for="event-participants">Number of Participants</label>
-                <input type="number" class="form-control" id="event-participants-number" name="event-participants-number" placeholder="Enter number of participants">
+                <input type="number" class="form-control" id="event-participants-number" name="event-participants-number" placeholder="Enter number of participants" required>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
                 <label for="event-start-date">Start Date</label>
-                <input type="date" class="form-control" id="event-start-date" name="event-start-date">
+                <input type="date" class="form-control" id="event-start-date" name="event-start-date" required>
               </div>
               <div class="col-md-6">
                 <label for="event-end-date">End Date</label>
-                <input type="date" class="form-control" id="event-end-date" name="event-end-date">
+                <input type="date" class="form-control" id="event-end-date" name="event-end-date" required>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6">
                 <label for="event-start-time">Start Time</label>
-                <input type="time" class="form-control" id="event-start-time" name="event-start-time">
+                <input type="time" class="form-control" id="event-start-time" name="event-start-time" required>
               </div>
               <div class="col-md-6">
                 <label for="event-end-time">End Time</label>
-                <input type="time" class="form-control" id="event-end-time" name="event-end-time">
+                <input type="time" class="form-control" id="event-end-time" name="event-end-time" required>
               </div>
             </div>
           <!-- </form> -->
@@ -301,7 +316,7 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
           <!-- <form method="POST" action="" id="form-2"> -->
             <div class="form-group">
               <label for="speaker-number">Number of Speakers</label>
-              <input type="number" class="form-control" id="speaker-number" name="speaker-number" placeholder="Enter number of speakers">
+              <input type="number" class="form-control" id="speaker-number" name="speaker-number" placeholder="Enter number of speakers" required>
             </div>
             <div id="speaker-details">
               <!-- Speaker details fields will be generated here -->
@@ -312,7 +327,7 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
           <!-- <form> -->
             <div class="form-group">
               <label for="organizer-number">Number of Organizers</label>
-              <input type="number" class="form-control" id="organizer-number" name="organizer-number" placeholder="Enter number of organizers">
+              <input type="number" class="form-control" id="organizer-number" name="organizer-number" placeholder="Enter number of organizers" required>
             </div>
             <div id="organizer-names">
               <!-- Organizer name input fields will be generated here -->
@@ -324,11 +339,11 @@ CREATE TABLE `**user_db_name**`.`**event_id_details**` (`event_id` INT(3) NOT NU
             <div class="form-group row">
               <div class="col-md-6">
                 <label for="event-venue">Contact Email</label>
-                <input type="text" class="form-control" id="contact-email" name="contact-email" placeholder="Enter contact email">
+                <input type="text" class="form-control" id="contact-email" name="contact-email" placeholder="Enter contact email" required>
               </div>
               <div class="col-md-6">
                 <label for="event-participants">Contact Mobile Number</label>
-                <input type="number" class="form-control" id="contact-phone" name="contact-phone" placeholder="Enter contact mobile number">
+                <input type="number" class="form-control" id="contact-phone" name="contact-phone" placeholder="Enter contact mobile number" required>
               </div>
             </div>
             <div class="form-group buttons" >

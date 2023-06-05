@@ -32,9 +32,11 @@ var create_btn = document.getElementById("create-event");
 var your_events_btn = document.getElementById("your_events_btn");
 var attendees_btn = document.getElementById("attendees_btn");
 var notification_btn = document.getElementById("notification_btn");
-var calender_btn = document.getElementById("calender_btn");
+var settings_btn = document.getElementById("settings_btn");
 var cancel_btn = document.getElementById("cancel");
-var section_ids = ["home", "your_events", "event_attendees", "notification", "calender", "event-form"];
+var logout_btn = document.getElementById("logout_btn");
+var search_btn = document.getElementById("search-btn");
+var section_ids = ["home", "your_events", "event_attendees", "notification", "settings", "event-form"];
 
 
 // Adding Eventlistners to Button Variables
@@ -43,9 +45,10 @@ home_btn.addEventListener("click", function(){getFocus("home")});
 your_events_btn.addEventListener("click", function(){getFocus("your_events")});
 attendees_btn.addEventListener("click", function(){getFocus("event_attendees")});
 notification_btn.addEventListener("click", function(){getFocus("notification")});
-calender_btn.addEventListener("click", function(){getFocus("calender")});
+settings_btn.addEventListener("click", function(){getFocus("settings")});
 create_btn.addEventListener("click", function(){getFocus("event-form")});
 cancel_btn.addEventListener("click", function(){getFocus("home")});
+search_btn.addEventListener("click", function(){getFocus("event_attendees")});
 
 
 
@@ -69,12 +72,6 @@ function getFocus(section_id){
     }
 }
 
-// Form Submit
-// function formSubmit(){
-//     document.getElementById("form-1").submit();
-//     document.getElementById("form-2").submit();
-//     document.getElementById("form-3").submit();
-// }
 
 
 
@@ -127,3 +124,20 @@ $(document).ready(function() {
           }
         });
       });
+
+
+// logout function
+function logout() {
+  // Make an AJAX request to the PHP file that handles logout
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "../partials/_functions.php", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Handle the response if needed
+      console.log(xhr.responseText);
+      // Optionally, redirect to a different page after logout
+      window.location.href = "../login.php";
+    }
+  };
+  xhr.send();
+}

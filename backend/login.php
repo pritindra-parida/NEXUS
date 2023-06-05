@@ -42,7 +42,7 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        <a href="index.html#intro" class="scrollto"><img src="../img/full-logo.png" alt="" title=""></a>
+        <a href="../index.html#intro" class="scrollto"><img src="../img/full-logo.png" alt="" title=""></a>
       </div>
 
       <nav id="nav-menu-container">
@@ -93,19 +93,19 @@
                     <!-- Username input -->
                     <div class="form-outline mb-4">
                       <input type="text" id="username" class="form-control" name="username" 
-                        placeholder="Enter Your Username" />
+                        placeholder="Enter Your Username" required />
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-3">
                       <input type="password" id="password" class="form-control" name="password" 
-                        placeholder="Enter Your Password" />
+                        placeholder="Enter Your Password" required />
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
                       <button type="submit" class="btn btn-primary btn-lg"
                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                      <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                      <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="signup.php"
                           class="link-danger">Register</a></p>
                     </div>
                   </form>
@@ -131,7 +131,7 @@
 
           <div class="col-lg-6 col-md-6 footer-info">
             <img src="../img/full-logo.png" alt="TheEvenet">
-            <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.</p>
+            <p>NEXUS is the ultimate tech event platform, seamlessly connecting enthusiasts and industry professionals. Discover, attend, and engage in cutting-edge events, fostering knowledge sharing and networking opportunities for all.</p>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
@@ -148,11 +148,12 @@
           <div class="col-lg-3 col-md-6 footer-contact">
             <h4>Contact Us</h4>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              NEXUS Tower <br>
+              Chandrasekharpur, Bhubaneswar <br>
+              Odisha-751024<br>
+              India<br>
+              <strong>Phone:</strong> 1800 1899 1899<br>
+              <strong>Email:</strong> support@nexus.org.in<br>
             </p>
 
             <div class="social-links">
